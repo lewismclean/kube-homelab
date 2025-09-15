@@ -1,3 +1,5 @@
+domain: lewis.home
+
 replicaCount: 1
 image:
   repository: jellyfin/jellyfin
