@@ -1,0 +1,17 @@
+replicaCount: 1
+image:
+  repository: jellyfin/jellyfin
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 8096
+
+persistence:
+  config:
+    enabled: true
+    path: /config
+  media:
+    enabled: true
+    path: /media

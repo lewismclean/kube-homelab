@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jellyfin
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: jellyfin
+  template:
+    metadata:
+      labels:
+        app: jellyfin
+    spec:
+      containers:
+        - name: jellyfin
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: 8096
+          volumeMounts:
+            - name: config
+              mountPath: {{ .Values.persistence.config.path }}
+            - name: media
+              mountPath: {{ .Values.persistence.media.path }}
+      volumes:
+        - name: config
+          hostPath:
+            path: /mnt/jellyfin/config
+            type: DirectoryOrCreate
+        - name: media
+          hostPath:
+            path: /mnt/media
+            type: DirectoryOrCreate
